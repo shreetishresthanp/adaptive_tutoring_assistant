@@ -2,3 +2,6 @@ google-genai
 chromadb
 genai
 datasets
+joblib
+os
+time
