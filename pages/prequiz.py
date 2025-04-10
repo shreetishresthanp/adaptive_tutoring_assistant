@@ -1,6 +1,6 @@
 import streamlit as st 
 import pandas as pd
-import os
+from utils.firebase_util import push_prequiz_data
 
 df = pd.read_csv("./LSATLR_questions.csv")
 df['qid'] = df['qid'].astype(int)
@@ -28,10 +28,15 @@ def on_submit():
     else:
       corr.append(0)
   prequiz_qs['Correct'] = corr
-  prequiz_qs.groupby('Subtopic').agg(num_correct=('Correct', 'sum'), num_questions=('Correct', 'count')).reset_index()
-  st.session_state.prequiz_df = prequiz_qs
+  pqq_processed = prequiz_qs.groupby('Subtopic').agg(num_correct=('Correct', 'sum'), num_questions=('Correct', 'count')).reset_index()
+  st.session_state.prequiz_df = pqq_processed
+  push_prequiz_data(corr)
+  if st.session_state.group_id == "A":
+    st.switch_page("pages/llm_tutor.py")
+  else:
+    st.switch_page("pages/textbook.py")
   
       
 
-st.button("Submit", on_click=lambda: st.session_state.update({"prequiz_answers": questions}))
+st.button("Submit", on_click=on_submit)
     

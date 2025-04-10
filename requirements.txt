@@ -3,3 +3,4 @@ chromadb
 genai
 datasets
 joblib
+firebase-admin
