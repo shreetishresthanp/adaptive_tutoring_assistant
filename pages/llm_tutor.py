@@ -16,7 +16,7 @@ AI_AVATAR_ICON = '✨'
 
 # Create a data/ folder if it doesn't already exist
 try:
-    os.mkdir('data/')
+    os.mkdir('data/groupb')
 except:
     # data/ folder already exists
     pass
