@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import os
 
-st.write(os.getcwd())
 df = pd.read_csv("./LSATLR_questions.csv")
 df['qid'] = df['qid'].astype(int)
 prequiz_qs = df[df['qid'] < 0].sort_values(by='qid', ascending=False).reset_index(drop=True)

@@ -1,86 +1,146 @@
+import time
+import os
+import joblib
 import streamlit as st
-from google import genai
+from utils.questions_dataset import system_instruction, get_model_tools
 from google.genai import types
+from google import genai
 
-# Show title and description.
-st.title("💬 LSAT Tutor")
-st.write(
-    "Hey there! I'm your tutor for today. We'll revise the LSAT Logical Reasoning Section."
-)
-
-# Ask user for their OpenAI API key via `st.text_input`.
-# Alternatively, you can store the API key in `./.streamlit/secrets.toml` and access it
-# via `st.secrets`, see https://docs.streamlit.io/develop/concepts/connections/secrets-management
-# openai_api_key = st.text_input("OpenAI API Key", type="password")
+# GOOGLE_API_KEY=os.environ.get('GOOGLE_API_KEY')
 GEMINI_API_KEY = "AIzaSyAjpHA08BUwLhK-tIlORxcB18RAp3541-M"
-
-# Create a client.
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-# Create a session state variable to store the chat messages. This ensures that the
-# messages persist across reruns.
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+new_chat_id = f'{time.time()}'
+MODEL_ROLE = 'ai'
+AI_AVATAR_ICON = '✨'
 
-# Display the existing chat messages via `st.chat_message`.
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+# Create a data/ folder if it doesn't already exist
+try:
+    os.mkdir('data/')
+except:
+    # data/ folder already exists
+    pass
 
-# Create a chat input field to allow the user to enter a message. This will display
-# automatically at the bottom of the page.
-if prompt := st.chat_input("Ready to begin?"):
+# Load past chats (if available)
+try:
+    past_chats: dict = joblib.load('data/past_chats_list')
+except:
+    past_chats = {}
 
-    # Store and display the current prompt.
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
+# Sidebar allows a list of past chats
+with st.sidebar:
+    st.write('# Past Chats')
+    if st.session_state.get('chat_id') is None:
+        st.session_state.chat_id = st.selectbox(
+            label='Pick a past chat',
+            options=[new_chat_id] + list(past_chats.keys()),
+            format_func=lambda x: past_chats.get(x, 'New Chat'),
+            placeholder='_',
+        )
+    else:
+        # This will happen the first time AI response comes in
+        st.session_state.chat_id = st.selectbox(
+            label='Pick a past chat',
+            options=[new_chat_id, st.session_state.chat_id] + list(past_chats.keys()),
+            index=1,
+            format_func=lambda x: past_chats.get(x, 'New Chat' if x != st.session_state.chat_id else st.session_state.chat_title),
+            placeholder='_',
+        )
 
-    # Generate a response using the OpenAI API.
-      #   stream = client.chat.completions.create(
-      #   model="gemini-2.0-flash",
-      #   # config=types.GenerateContentConfig(
-      #   # system_instruction=system_instruction,
-      #   # tools=[tools]),
-      #   messages=[
-      #       {"role": m["role"], "content": m["content"]}
-      #       for m in st.session_state.messages
-      #   ],
-      #   stream=True,
-      # )
+    # Save new chats after a message has been sent to AI
+    st.session_state.chat_title = f'ChatSession-{st.session_state.chat_id}'
+    
 
-    stream = client.chats.create(model="gemini-2.0-flash",
-        # messages = [
-        #     {"role": m["role"], "content": m["content"]}
-        #     for m in st.session_state.messages
-        # ]
-    # config=types.GenerateContentConfig(
-    #   system_instruction=system_instruction,
-    #   tools=[tools]
-    # )
+st.write('# Chat with LSAT Tutor')
+
+# Chat history (allows to ask multiple questions)
+try:
+    st.session_state.messages = joblib.load(
+        f'data/{st.session_state.chat_id}-st_messages'
     )
-
-        # Stream the response to the chat using `st.write_stream`, then store it in 
-    # session state.
-    with st.chat_message("assistant"):
-        response = st.write_stream(stream.send_message(prompt))
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
-
-
+    st.session_state.gemini_history = joblib.load(
+        f'data/{st.session_state.chat_id}-gemini_messages'
+    )
+except:
+    st.session_state.messages = []
+    st.session_state.gemini_history = []
+    print('new_cache made')
 
 
-# # Streamed response emulator
-# def response_generator():
-#     response = random.choice(
-#         [
-#             "Hello there! How can I assist you today?",
-#             "Hi, human! Is there anything I can help you with?",
-#             "Hi there. Do you need help?",
-#         ]
-#     )
-#     for word in response.split():
-#         yield word + " "
-#         time.sleep(0.05)
+st.session_state.chat = client.chats.create(model='gemini-2.0-flash',
+                                            config=types.GenerateContentConfig(
+                                            tools=[get_model_tools()],
+                                            system_instruction=system_instruction),
+                                            history=st.session_state.gemini_history
+                                               )
 
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(
+        name=message['role'],
+        avatar=message.get('avatar'),
+    ):
+        st.markdown(message['content'])
 
+# React to user input
+if prompt := st.chat_input('Your message here...'):
+    # Save this as a chat for later
+    if st.session_state.chat_id not in past_chats.keys():
+        past_chats[st.session_state.chat_id] = st.session_state.chat_title
+        joblib.dump(past_chats, 'data/past_chats_list')
+    # Display user message in chat message container
+    with st.chat_message('user'):
+        st.markdown(prompt)
+    # Add user message to chat history
+    st.session_state.messages.append(
+        dict(
+            role='user',
+            content=prompt,
+        )
+    )
+    ## Send message to AI
+    response = st.session_state.chat.send_message_stream(
+        prompt,
+    )
+    # Display assistant response in chat message container
+    with st.chat_message(
+        name=MODEL_ROLE,
+        avatar=AI_AVATAR_ICON,
+    ):
+        message_placeholder = st.empty()
+        full_response = ''
+        assistant_response = response
+        # Streams in a chunk at a time
+        for chunk in response:
+            # Simulate stream of chunk
+            if chunk.text == None:
+                full_response = "No response!! Report to admin!"
+
+            for ch in chunk.text.split(' '):
+                full_response += ch + ' '
+                time.sleep(0.05)
+                # Rewrites with a cursor at end
+                message_placeholder.write(full_response + '▌')
+        # Write full message with placeholder
+        message_placeholder.write(full_response)
+
+            # Add assistant response to chat history
+        st.session_state.messages.append(
+            dict(
+                role=MODEL_ROLE,
+                content=full_response,
+                avatar=AI_AVATAR_ICON,
+            )
+        )
+
+    st.session_state.gemini_history = st.session_state.chat.get_history()
+    
+    # Save to file
+    joblib.dump(
+        st.session_state.messages,
+        f'data/{st.session_state.chat_id}-st_messages',
+    )
+    joblib.dump(
+        st.session_state.gemini_history,
+        f'data/{st.session_state.chat_id}-gemini_messages',
+    )
