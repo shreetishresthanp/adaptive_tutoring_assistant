@@ -4,7 +4,7 @@ from utils.firebase_util import push_postquiz_data
 
 df = pd.read_csv("./LSATLR_questions.csv")
 df['qid'] = df['qid'].astype(int)
-postquiz_qs = df[df['qid'] > 0].sort_values(by='qid', ascending=False).reset_index(drop=True)
+postquiz_qs = df[df['qid'] > 0].sort_values(by='qid', ascending=True).reset_index(drop=True)
 
 st.title("Post-Quiz")
 st.write("Please answer the following questions to the best of your ability. (Est. time: 15m)")
@@ -34,5 +34,7 @@ def on_submit():
   
       
 
-st.button("Submit", on_click=on_submit)
-    
+btn = st.button("Submit")
+  
+if btn:
+  on_submit()

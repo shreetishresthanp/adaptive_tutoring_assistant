@@ -2,10 +2,12 @@ import firebase_admin
 from firebase_admin import credentials, db
 import streamlit as st 
 
-cred = credentials.Certificate('../cs6983-tutor-firebase-adminsdk-fbsvc-9db3bc9bd3.json')
-firebase_admin.initialize_app(cred, {
-  'databaseURL': 'https://cs6983-tutor-default-rtdb.firebaseio.com/'
-})
+def init_connection():
+  cred = credentials.Certificate('./cs6983-tutor-firebase-adminsdk-fbsvc-9db3bc9bd3.json')
+  if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://cs6983-tutor-default-rtdb.firebaseio.com/'
+    })
 
 def push_presurvey_data(q1, q2, q3, q3_other):
   ref = db.reference('presurvey')

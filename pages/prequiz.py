@@ -38,5 +38,7 @@ def on_submit():
   
       
 
-st.button("Submit", on_click=on_submit)
+btn = st.button("Submit")
+if btn:
+  on_submit()
     

@@ -1,4 +1,5 @@
 import streamlit as st 
+from utils.firebase_util import push_presurvey_data
 
 st.write("Please take this short survey:")
 q1 = st.slider("On a scale of 1-5, how familiar are you with the LSAT Logical Reasoning section?\n" \
@@ -8,14 +9,18 @@ q1 = st.slider("On a scale of 1-5, how familiar are you with the LSAT Logical Re
 q2 = st.slider("On a scale of 1-5, how confident are you in solving Logical Reasoning questions?\n" \
                "1: Not confident at all" \
                "5: I can ace all the questions", 1, 5, 3)
-q3 = st.multiselect("What resources do you usually use for studying?", 
-                    ["Textbooks", "Online courses", "Practice tests", "Tutoring", "Other"],
-                    help="Select all that apply. If you select 'Other', please specify in the text box below."
-                    )
-q3_other = st.text_input("If you selected 'Other', please specify:", disabled="Other" not in q3)
+st.write("Which resources do you use to study?")
+q3 = {
+  "textbook": st.checkbox("Textbooks"),
+  "online_courses": st.checkbox("Online courses"),
+  "practice_tests": st.checkbox("Practice tests"),
+  "ai_tools": st.checkbox("AI tools"),
+  "other": st.checkbox("Other"),
+}
+q3_other = st.text_input("If you selected 'Other', please specify:", disabled=not q3["other"])
 st.write("If you are done, press submit to move onto the next phase.")
 submit_btn = st.button("Submit")
 
 if submit_btn:
-  #TODO: submit the survey data to the database
+  push_presurvey_data(q1, q2, q3, q3_other)
   st.switch_page("pages/prequiz.py")
