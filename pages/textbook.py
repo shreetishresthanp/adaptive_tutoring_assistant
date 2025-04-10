@@ -74,8 +74,8 @@ st.markdown(concept_excerpts[topic])
 st.subheader("Practice Question")
 q = example_excerpts[topic]
 st.write(q[0])
-for i, choice in enumerate(choices):
-    st.write(f"{i}). {choice}")
+# for i, choice in enumerate(choices):
+#     st.write(f"{i}). {choice}")
 
 # Show answer
 if st.checkbox("Show Answer"):
@@ -90,6 +90,11 @@ joblib.dump(
     st.session_state.gemini_history,
     f'data/{st.session_state.chat_id}-gemini_messages',
 )
+
+next_page = st.button("Done")
+
+if next_page:
+    st.switch_page("pages/postquiz.py")
 
 
 

@@ -52,6 +52,10 @@ with st.sidebar:
     
 
 st.write('# Chat with LSAT Tutor')
+next_btn = st.button("Click here when finished")
+
+st.write("Use this AI Tutor to help you understand the concepts. You can ask it to explain the concepts, provide examples, or clarify any doubts you have.")
+st.write("Start by sending a hello message!")
 
 # Chat history (allows to ask multiple questions)
 try:
@@ -66,11 +70,30 @@ except:
     st.session_state.gemini_history = []
     print('new_cache made')
 
-
+sys_prompt = system_instruction % (
+    st.session_state.prequiz_df['num_correct'][0],
+    st.session_state.prequiz_df['num_questions'][0],
+    st.session_state.prequiz_df['num_correct'][1],
+    st.session_state.prequiz_df['num_questions'][1],
+    st.session_state.prequiz_df['num_correct'][2],
+    st.session_state.prequiz_df['num_questions'][2],
+    st.session_state.prequiz_df['num_correct'][3],
+    st.session_state.prequiz_df['num_questions'][3],
+    st.session_state.prequiz_df['num_correct'][4],
+    st.session_state.prequiz_df['num_questions'][4],
+    st.session_state.prequiz_df['num_correct'][5],
+    st.session_state.prequiz_df['num_questions'][5],
+    st.session_state.prequiz_df['num_correct'][6],
+    st.session_state.prequiz_df['num_questions'][6],
+    st.session_state.prequiz_df['num_correct'][7],
+    st.session_state.prequiz_df['num_questions'][7],
+    st.session_state.prequiz_df['num_correct'][8],
+    st.session_state.prequiz_df['num_questions'][8]
+)
 st.session_state.chat = client.chats.create(model='gemini-2.0-flash',
                                             config=types.GenerateContentConfig(
                                             tools=[get_model_tools()],
-                                            system_instruction=system_instruction),
+                                            system_instruction=sys_prompt),
                                             history=st.session_state.gemini_history
                                                )
 
@@ -144,3 +167,7 @@ if prompt := st.chat_input('Your message here...'):
         st.session_state.gemini_history,
         f'data/{st.session_state.chat_id}-gemini_messages',
     )
+
+
+if next_btn:
+    st.switch_page("pages/postquiz.py")
