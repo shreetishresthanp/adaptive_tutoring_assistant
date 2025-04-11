@@ -21,6 +21,8 @@ for index, row in prequiz_qs.iterrows():
   st.divider()
 
 def on_submit():
+  print(time.time())
+  print(st.session_state.prequiz_start_time)
   duration = time.time() - st.session_state.prequiz_start_time
   st.session_state.pre_quiz_answers = questions
   corr = []
@@ -43,4 +45,3 @@ btn = st.button("Submit")
 if btn:
   on_submit()
     
-st.session_state.prequiz_start_time = time.time()

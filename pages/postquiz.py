@@ -21,6 +21,8 @@ for index, row in postquiz_qs.iterrows():
   st.divider()
 
 def on_submit():
+  print(time.time())
+  print(st.session_state.postquiz_start_time)
   duration = time.time() - st.session_state.postquiz_start_time
   corr = []
   for index, row in postquiz_qs.iterrows():
@@ -40,6 +42,3 @@ btn = st.button("Submit")
   
 if btn:
   on_submit()
-
-
-st.session_state.postquiz_start_time = time.time()
