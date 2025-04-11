@@ -1,5 +1,5 @@
 Assumption = """
-Question Type: Assumption
+
 Assumption questions ask you to identify the missing link in the logic of the stimulus
 argument.
 Some example question stems are
@@ -33,7 +33,7 @@ was irrelevant to the strength of the structure.
 
 
 Weaken_Strengthen = """
-Question Type: Weaken/Strengthen
+
 You will have to attack a significant number of weaken and strengthen questions in
 order to end up with a respectable LSAT score. This question type also sometimes
 appears in the Reading Comprehension section of the exam. Since the LSAT is set up to
@@ -83,7 +83,6 @@ argument.
 """
 Conclusion = """
 
-Question Type: Conclusion
 These questions ask you to draw a conclusion from evidence presented within the stimulus.
 In some cases, the conclusion that you are asked to draw is based on only part of
 the stimulus and will not necessarily be the main idea of the stimulus paragraph. Some
@@ -110,7 +109,6 @@ Look for the logical end of the chain of reasoning started in the stimulus argum
 """
 Method_of_Argument = """
 
-Question Type: Method of Argument
 Method of argument questions ask you to recognize the way that the argument is put
 together. You must choose the answer that properly describes the structure of the stimulus
 argument. Some, but certainly not all, method of argument questions are based on
@@ -136,7 +134,6 @@ that you can recognize the argument amidst the tricky language.
 """
 Principle = """
 
-Question Type: Principle
 These questions ask you to identify a rule, or principle, that supports the stimulus argument
 presented. In some cases, you are required to choose an argument that conforms
 to the stimulus principle.
@@ -159,7 +156,6 @@ content.
 """
 Point_of_Contention = """
 
-Question Type: Point of Contention
 These questions always involve a dialogue between two people who disagree about
 something. You are expected to choose the answer that best describes the crux of the
 disagreement.
@@ -181,7 +177,6 @@ correct answer.
 """
 Role_of_Fact = """
 
-Question Type: Role of Fact
 Some of the questions ask about the role, or function, of a specific fact that is included
 in the stimulus argument.
 
@@ -202,7 +197,6 @@ too narrow or too broad, or beyond the scope of the stimulus argument.
 """
 Flaw = """
 
-Question Type: Flaw
 These questions ask you to identify an error of reasoning in the stimulus argument.
 Some sample question stems are
 1. Which one of the following, if true, identifies a flaw in the plan for the program?
@@ -224,7 +218,6 @@ taking something for granted that is not necessarily true.
 """
 Paradox = """
 
-Question Type: Paradox
 A paradox arises when you are presented with two statements that are both true, yet
 they appear to be mutually contradictory. The key words to help you spot paradox question
 stems are “explain” and “reconcile.”
@@ -249,7 +242,6 @@ unsound” is poorly defined.
 """
 Parallel_Structure = """
 
-Question Type: Parallel Structure
 These questions ask you to match up two arguments that share structural characteristics.
 There are usually two parallel structure questions in each Logical Reasoning section. They
 are usually in the second half of the section, and they can usually be recognized by their

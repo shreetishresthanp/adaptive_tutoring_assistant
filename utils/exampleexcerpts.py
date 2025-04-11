@@ -1,6 +1,5 @@
 Assumption_q = f"""
 
-Sample Assumption Question \n
 Consider the following example: \n
 1. The birth rate in Country X is down this year by 12% compared to last year. The
 death rate in Country X has remained stable for several years. Therefore, the
@@ -47,7 +46,7 @@ must be correct.
 """
 
 Weaken_Strengthen_q = """
-Sample Weaken/Strengthen Questions \n
+
 Consider the following example: \n
 1. More and more computer software that is capable of correcting not just spelling,
 but also grammar and punctuation is being developed. Therefore, it is increasingly
@@ -80,7 +79,7 @@ likely to be true. \n
 """
 
 Conclusion_q = """
-Sample Conclusion Question \n
+
 Consider the following example: \n
 1. Physician: The continued use of this drug to treat patients with a certain disease
 cannot be adequately supported by the proposition that any drug that treats the
@@ -110,7 +109,7 @@ the drug should be considered when deciding whether to use the drug.
 """
 
 Method_of_Argument_q = """
-Sample Method of Argument Question \n
+
 Consider the following example: \n
 1. It is widely accepted that eating sugar can cause weight gain. Indeed, many people
 who are susceptible to weight gain report that, in their own experience, eating
@@ -140,7 +139,7 @@ consumption are, in fact, caused by stress. \n
 """
 
 Principle_q = """
-Sample Principle Question \n
+
 Consider the following example: \n
 1. The best way to create a successful party is to visualize the guests discussing it with
 friends the next day. The hostess should first decide what aspects of the party will
@@ -173,7 +172,7 @@ rather than backward. \n
 """
 
 Point_of_Contention_q = """
-Sample Point of Contention Question \n
+
 Consider the following example: \n
 1. Jason: The Internet is making more information available to more people than
 ever before in history. So, people can simply learn all they need to know without
@@ -198,7 +197,7 @@ direct public access to information. Mark thinks that the opposite will occur.
 """
 
 Role_of_Fact_q = """
-Sample Role of Fact Question \n
+
 Consider the following example: \n
 1. Some environmentalists have argued that there are two independently sufficient
 justifications for recycling waste materials: one based on economics and the other
@@ -228,7 +227,7 @@ to shore up the reasons given by environmentalists. \n
 """
 
 Flaw_q = """
-Sample Flaw Question \n
+
 Consider the following example: \n
 1. Giant Motors is attempting to dominate the automobile market by promoting its
 products with an expensive television advertising campaign. But, the results of recent
@@ -257,7 +256,7 @@ market. Each of the other answer choices describes an error in reasoning that is
 to the stimulus argument. \n
 """
 Paradox_q = """
-Sample Paradox Question \n
+
 Consider the following example: \n
 1. Researchers concur with one another on the issue of the harm that can result when
 children are exposed to microscopic asbestos fibers. The resulting disease, asbestosis,
@@ -295,7 +294,7 @@ seemingly logical inconsistency inherent in the researchers’ positions. \n
 """
 
 Parallel_Structure_q = """
-Sample Parallel Structure Question \n
+
 Consider the following example: \n
 1. Murcheson’s drawing of the Lincoln Monument contains several inaccuracies.
 Therefore, your attempt to reproduce the drawing of the monument will not be a

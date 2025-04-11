@@ -51,7 +51,8 @@ with st.sidebar:
     st.session_state.chat_title = f'ChatSession-{st.session_state.chat_id}'
     
 
-st.write('# Chat with LSAT Tutor')
+st.set_page_config(page_title="LSAT Group A", page_icon="📘")
+st.title("📘Logical Reasoning: Group A")
 next_btn = st.button("Click here when finished")
 
 st.write("Use this AI Tutor to help you understand the concepts. You can ask it to explain the concepts, provide examples, or clarify any doubts you have.")
@@ -68,7 +69,6 @@ try:
 except:
     st.session_state.messages = []
     st.session_state.gemini_history = []
-    print('new_cache made')
 
 sys_prompt = system_instruction % (
     st.session_state.prequiz_df['num_correct'][0],
