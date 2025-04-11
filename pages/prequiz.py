@@ -8,7 +8,7 @@ df['qid'] = df['qid'].astype(int)
 prequiz_qs = df[df['qid'] < 0].sort_values(by='qid', ascending=False).reset_index(drop=True)
 
 st.title("Pre-Quiz")
-st.write("Please answer the following questions to the best of your ability. (Est. time: 15m)")
+st.write("Please answer the following questions to the best of your ability.\n\nFeel free to use a piece of scrap paper if it would help.\n\n(Est. time: 10-15m)")
 
 questions = []
 for index, row in prequiz_qs.iterrows():
@@ -44,4 +44,11 @@ def on_submit():
 btn = st.button("Submit")
 if btn:
   on_submit()
-    
+
+st.markdown(
+    """<style>
+div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {
+    font-size: 18px;
+}
+    </style>
+    """, unsafe_allow_html=True)
