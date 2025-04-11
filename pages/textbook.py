@@ -1,12 +1,9 @@
 import streamlit as st
 from utils.conceptexcerpts import concept_excerpts
 from utils.exampleexcerpts import example_excerpts
-from utils.misc import end_session, display_pre_quiz
 
 st.set_page_config(page_title="LSAT Group B", page_icon="📘")
 st.title("📘Logical Reasoning: Group B")
-
-display_pre_quiz()
 
 choices = ["A", "B", "C", "D", "E"]
 
@@ -29,7 +26,7 @@ if st.checkbox("Show Answer"):
     st.success(f"Correct Answer: {q[1]}")
 
 
-next_page = st.button("Click here to end session")
+next_page = st.button("Click here when finished")
 
 if next_page:
     st.switch_page("pages/postquiz.py")

@@ -1,6 +1,7 @@
 import streamlit as st 
 from utils.firebase_util import push_postsurvey_data
 
+st.title("Post-Survey")
 st.write("Please answer the following questions")
 q1 = st.radio("How was the difficulty of the second quiz compared to the first?",
               ["Easier", "Litttle Easier", "Similar", "Little Harder", "Harder"],

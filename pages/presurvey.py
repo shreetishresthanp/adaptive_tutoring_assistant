@@ -1,6 +1,7 @@
 import streamlit as st 
 from utils.firebase_util import push_presurvey_data
 
+st.title("Pre-Survey")
 st.write("Please take this short survey:")
 q1 = st.slider("On a scale of 1-5, how familiar are you with the LSAT Logical Reasoning section?\n" \
                "1: Never heard of it\n" \

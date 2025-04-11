@@ -6,6 +6,8 @@ from utils.questions_dataset import system_instruction, get_model_tools
 from google.genai import types
 from google import genai
 
+st.set_page_config(page_title="LSAT Group A", page_icon="📘")
+
 # GOOGLE_API_KEY=os.environ.get('GOOGLE_API_KEY')
 GEMINI_API_KEY = "AIzaSyAjpHA08BUwLhK-tIlORxcB18RAp3541-M"
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -16,7 +18,7 @@ AI_AVATAR_ICON = '✨'
 
 # Create a data/ folder if it doesn't already exist
 try:
-    os.mkdir('data/groupb')
+    os.mkdir('data/')
 except:
     # data/ folder already exists
     pass
@@ -51,7 +53,6 @@ with st.sidebar:
     st.session_state.chat_title = f'ChatSession-{st.session_state.chat_id}'
     
 
-st.set_page_config(page_title="LSAT Group A", page_icon="📘")
 st.title("📘Logical Reasoning: Group A")
 next_btn = st.button("Click here when finished")
 
@@ -137,7 +138,7 @@ if prompt := st.chat_input('Your message here...'):
         for chunk in response:
             # Simulate stream of chunk
             if chunk.text == None:
-                full_response = "No response!! Report to admin!"
+                chunk.text = "Let's try that one more time so I understand. Please tell me one more time."
 
             for ch in chunk.text.split(' '):
                 full_response += ch + ' '

@@ -15,7 +15,7 @@ for index, row in prequiz_qs.iterrows():
   questions.append(st.radio(
     row['Question'],
     [row['A'], row['B'], row['C'], row['D'], row['E']],
-    key=f'prequiz{row["qid"]}',
+    key=f'prequiz{row["qid"]}'
   ))
   st.divider()
 
