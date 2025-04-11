@@ -36,7 +36,7 @@ def push_postsurvey_data(q1, q2, q3, q4, q5, q6, q7, q8, q9):
     'q9': q9
   })
 
-def push_prequiz_data(prequiz_correct):
+def push_prequiz_data(prequiz_correct, duration):
   ref = db.reference('prequiz')
   ref.push({
     'name': st.session_state.name,
@@ -51,9 +51,10 @@ def push_prequiz_data(prequiz_correct):
     'q8': prequiz_correct[7],
     'q9': prequiz_correct[8],
     'q10': prequiz_correct[9],
+    'time': duration
   })
 
-def push_postquiz_data(postquiz_correct):
+def push_postquiz_data(postquiz_correct, duration):
   ref = db.reference('postquiz')
   ref.push({
     'name': st.session_state.name,
@@ -68,4 +69,13 @@ def push_postquiz_data(postquiz_correct):
     'q8': postquiz_correct[7],
     'q9': postquiz_correct[8],
     'q10': postquiz_correct[9],
+    'time': duration
+  })
+
+def push_study_time_data(duration):
+  ref = db.reference('study_time')
+  ref.push({
+    'name': st.session_state.name,
+    'group_id': st.session_state.group_id,
+    'time': duration
   })

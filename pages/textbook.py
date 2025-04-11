@@ -1,6 +1,8 @@
 import streamlit as st
 from utils.conceptexcerpts import concept_excerpts
 from utils.exampleexcerpts import example_excerpts
+import time
+from utils.firebase_util import push_study_time_data
 
 st.set_page_config(page_title="LSAT Group B", page_icon="📘")
 st.title("📘Logical Reasoning: Group B")
@@ -29,6 +31,9 @@ if st.checkbox("Show Answer"):
 next_page = st.button("Click here when finished")
 
 if next_page:
+    print(time.time())
+    print(st.session_state.textbook_start_time)
+    push_study_time_data(time.time() - st.session_state.textbook_start_time)
     st.switch_page("pages/postquiz.py")
 
 

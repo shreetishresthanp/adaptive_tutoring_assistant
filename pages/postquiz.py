@@ -1,6 +1,7 @@
 import streamlit as st 
 import pandas as pd
 from utils.firebase_util import push_postquiz_data
+import time
 
 df = pd.read_csv("./LSATLR_questions.csv")
 df['qid'] = df['qid'].astype(int)
@@ -20,6 +21,7 @@ for index, row in postquiz_qs.iterrows():
   st.divider()
 
 def on_submit():
+  duration = time.time() - st.session_state.postquiz_start_time
   corr = []
   for index, row in postquiz_qs.iterrows():
     correct_answer = row[row['Correct Ans.']]
@@ -29,7 +31,7 @@ def on_submit():
       corr.append(0)
   postquiz_qs['Correct'] = corr
   postquiz_qs.groupby('Subtopic').agg(num_correct=('Correct', 'sum'), num_questions=('Correct', 'count')).reset_index()
-  push_postquiz_data(corr)
+  push_postquiz_data(corr, duration)
   st.switch_page("pages/postsurvey.py")
   
       
@@ -38,3 +40,6 @@ btn = st.button("Submit")
   
 if btn:
   on_submit()
+
+
+st.session_state.postquiz_start_time = time.time()

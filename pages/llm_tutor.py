@@ -3,6 +3,8 @@ import streamlit as st
 from utils.questions_dataset import system_instruction, get_model_tools
 from google.genai import types
 from google import genai
+import time
+from utils.firebase_util import push_study_time_data
 
 st.set_page_config(page_title="LSAT Group A", page_icon="📘")
 
@@ -95,4 +97,7 @@ if user_input:
     st.session_state.gemini_history = st.session_state.chat.get_history()
 
 if next_btn:
+    print(time.time())
+    print(st.session_state.tutor_start_time)
+    push_study_time_data(time.time() - st.session_state.tutor_start_time)
     st.switch_page("pages/postquiz.py")
