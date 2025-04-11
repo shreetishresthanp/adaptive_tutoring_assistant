@@ -83,16 +83,25 @@ if user_input:
         avatar=AI_AVATAR_ICON,
         ):
         response_box = st.empty()
-        for chunk in response:
-            chunk_text = chunk.text
-            if chunk_text:
-                full_reply += chunk_text
-                time.sleep(0.05)
-                response_box.markdown(full_reply + "▌")
+        try:
+            for chunk in response:
+                chunk_text = chunk.text
+                if chunk_text:
+                    full_reply += chunk_text
+                    time.sleep(0.05)
+                    response_box.markdown(full_reply + "▌")
 
-    # Final display after stream ends
-    response_box.markdown(full_reply)
+            # Final display after stream ends
+            response_box.markdown(full_reply)
+
+        except Exception as e:
+            response_box.markdown(f"⚠️ Error: {e}")
+            full_reply = "Sorry, there was an error."
+            print(e)
     st.session_state.messages.append({"role": "assistant", "text": full_reply, "avatar": AI_AVATAR_ICON})
+
+    if len(st.session_state.messages) > 10:
+        st.session_state.messages = st.session_state.messages[-10:]
 
     st.session_state.gemini_history = st.session_state.chat.get_history()
 
