@@ -22,6 +22,7 @@ for index, row in prequiz_qs.iterrows():
 
 def on_submit():
   duration = time.time() - st.session_state.prequiz_start_time
+  st.session_state.pre_quiz_answers = questions
   corr = []
   for index, row in prequiz_qs.iterrows():
     correct_answer = row[row['Correct Ans.']]
@@ -29,16 +30,12 @@ def on_submit():
       corr.append(1)
     else:
       corr.append(0)
+  st.session_state.pre_quiz_correct = corr
   prequiz_qs['Correct'] = corr
   pqq_processed = prequiz_qs.groupby('Subtopic').agg(num_correct=('Correct', 'sum'), num_questions=('Correct', 'count')).reset_index()
   st.session_state.prequiz_df = pqq_processed
   push_prequiz_data(corr, duration)
-  if st.session_state.group_id == "A":
-    st.session_state.tutor_start_time = time.time()
-    st.switch_page("pages/llm_tutor.py")
-  else:
-    st.session_state.textbook_start_time = time.time()
-    st.switch_page("pages/textbook.py")
+  st.switch_page("pages/prequiz_results.py")
   
       
 
