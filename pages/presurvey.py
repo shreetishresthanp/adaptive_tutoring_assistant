@@ -1,5 +1,6 @@
 import streamlit as st 
 from utils.firebase_util import push_presurvey_data
+import time
 
 st.title("Pre-Survey")
 st.write("Please take this short survey:")
@@ -24,4 +25,5 @@ submit_btn = st.button("Submit")
 
 if submit_btn:
   push_presurvey_data(q1, q2, q3, q3_other)
+  st.session_state.prequiz_start_time = time.time()
   st.switch_page("pages/prequiz.py")

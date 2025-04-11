@@ -109,4 +109,5 @@ if next_btn:
     print(time.time())
     print(st.session_state.tutor_start_time)
     push_study_time_data(time.time() - st.session_state.tutor_start_time)
+    st.session_state.postquiz_start_time = time.time()
     st.switch_page("pages/postquiz.py")
