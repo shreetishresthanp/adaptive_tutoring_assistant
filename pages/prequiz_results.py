@@ -1,6 +1,7 @@
 import streamlit as st 
 import pandas as pd
 import time
+import altair as alt
 
 df = pd.read_csv("./LSATLR_questions.csv")
 df['qid'] = df['qid'].astype(int)
@@ -8,6 +9,21 @@ prequiz_qs = df[df['qid'] < 0].sort_values(by='qid', ascending=False).reset_inde
 
 st.title("Pre-Quiz")
 st.write("Results:")
+
+def display_pre_quiz():
+   source = st.session_state.prequiz_df
+   if source is not None and len(source) > 0: 
+    st.write("Pre-Quiz Results: \n")
+    source["Performance"] = source["num_correct"] / source["num_questions"] * 100
+    source = source.sort_values(by='Performance', ascending=False)
+    c = alt.Chart(source).mark_bar().encode(y=alt.Y("Subtopic", sort=None), x=alt.X(
+                "Performance",
+                scale=alt.Scale(domain=[0, 100]),
+                axis=alt.Axis(values=[0, 25, 50, 75, 100], title="Performance (%)")
+            ))
+    st.altair_chart(c,use_container_width=True)
+
+display_pre_quiz()
 
 def response_to_idx(response, row):
   if response == row['A']:
