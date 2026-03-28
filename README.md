@@ -1,16 +1,6 @@
 ### Project Overview ###
 The field of education has been significantly affected by the rising use of LLMs, with a growing number of students using them as a part of their studying habits. While AI systems have shown their potential, concerns regarding their effectiveness persist. This study evaluates the efficacy of an adaptive Ai tutoring system powered by Gemini 2.0 Flash in teaching participants LSAT Logical Reasoning, a skills-based subject that relies more on critical thinking rather than memorization of facts. Participants were randomly assigned to either the control group using textbook assignments or the experimental group using the AI tutor. Performance was measured through pre- and post-treatment quiz scores, self-reported confidence scores, and qualitative feedback. Results showed some slight learning gains in both groups, with the experimental group improving by 20% and the control group by 9% on overall scores. The experimental group also reported higher perceived ability and lower frustration compared to the control group. However, due to the unfortunately paltry sample size (n = 7), statistical tests were unable to demonstrate any significant results. Overall, the results indicate that AI tutors may provide a comparable if not better method in terms of learning outcomes and user satisfaction. A working prototype of the pipeline can be found at: https://huggingface.co/spaces/LSATAdaptiveTutor/chatbot_tutor
 
----
-title: Chatbot Tutor
-emoji: 📚
-sdk: streamlit
-sdk_version: 1.44.1
-app_file: app.py
-pinned: false
-license: apache-2.0
----
-
 #### Model Used: #### 
 Gemini 2.0 Flash
 Latest Prototype at: https://huggingface.co/spaces/LSATAdaptiveTutor/chatbot_tutor
